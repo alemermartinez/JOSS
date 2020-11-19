@@ -109,7 +109,6 @@ to the following optimization problem:
 -->
 $$ \min_{\mu, g_1, \ldots, g_d} E \left[ \, \rho \left( \frac{Y - \mu -
 \sum_{j=1}^d g_j(X_j) }{\sigma} \right) \right] 
-\end{equation}
 $$
 over $\mu \in \mathbb{R}$ and functions $g_j$ with $E[g_j(X_j)] = 0$ and
 $E[g_j^2(X_j)] < \infty$, 
