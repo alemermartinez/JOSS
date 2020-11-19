@@ -8,10 +8,10 @@ tags:
 - Robustness
 date: "17 November 2020"
 output:
-  word_document: default
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
+  word_document: default
 authors:
 - name: Alejandra M. Martínez
   orcid: 0000-0002-1893-2039
@@ -87,7 +87,7 @@ Similarly, the functions $g_j$ can be interpreted as the marginal effect
 of the $j$-th covariate on the expected value of the response variable when all
 other explanatory variables remain fixed.
 
-One of the most popular estimation procedures for additive models is the backfitting algorithm proposed by @FriedmanStuetzle1981. Noting that under an additive model the additive components satisfy
+One of the most popular estimation procedures for additive models is the backfitting algorithm proposed by @FriedmanStuetzle1981. Noting that under model \autoref{eq:model} the additive components satisfy
 $g_j(x) = E [ Y - \mu - \sum_{\ell \ne j} g_\ell(X_\ell) | X_j = x ]$, the
 backfitting procedure iteratively computes estimates of each $g_j$ by smoothing
 the partial residuals as functions of the observed values of $X_j$.
@@ -102,10 +102,15 @@ with robust univariate smoothers, such as the kernel-based estimators in
 -->
 This approach corresponds to finding the solution
 to the following optimization problem:
-\begin{equation} \label{rbf:min}
+<!--\begin{equation} \label{rbf:min}
 \min_{\mu, g_1, \ldots, g_d} E \left[ \, \rho \left( \frac{Y - \mu -
 \sum_{j=1}^d g_j(X_j) }{\sigma} \right) \right] 
 \end{equation}
+-->
+$$ \min_{\mu, g_1, \ldots, g_d} E \left[ \, \rho \left( \frac{Y - \mu -
+\sum_{j=1}^d g_j(X_j) }{\sigma} \right) \right] 
+\end{equation}
+$$
 over $\mu \in \mathbb{R}$ and functions $g_j$ with $E[g_j(X_j)] = 0$ and
 $E[g_j^2(X_j)] < \infty$, 
 where $\rho : \mathbb{R} \to \mathbb{R}$ is an even,
@@ -130,7 +135,7 @@ variables: solar radiance measured in the frequency band
 The following figure shows the scatter plot of the data which indicates that the 
 relationship between ozone and other variables does not appear to be linear.
 
-![](ScatterPlot.png)
+![Scatter Plot](ScatterPlot.png)
 
 We propose to fit an additive model of the form 
 \begin{equation}\label{eq:ozone-model}
