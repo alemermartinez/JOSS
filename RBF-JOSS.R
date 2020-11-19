@@ -3,9 +3,9 @@
 data(airquality)
 
 # # Show data in pairwise plots
-# png('ScatterPlot.png', bg='transparent')
+ png('ScatterPlot.png', bg='transparent')
 pairs(airquality[, c('Ozone', 'Solar.R', 'Wind', 'Temp')], pch=19, col='gray30', cex=1.5)
-# dev.off()
+ dev.off()
 
 # Load RBF package
 # devtools::install_github("msalibian/RBF")
@@ -35,8 +35,8 @@ bandw <- c(136.7285, 10.67314, 4.764985)
 
 # Compute the robust backfitting with the optimal bandwidths
 fit.full <- backf.rob(Ozone ~ Solar.R + Wind + Temp, windows=bandw, 
-                      epsilon=1e-6, degree=1, type='Tukey', 
-                      subset = ccs, data=airquality)
+                      degree=1, type='Tukey', subset = ccs, 
+                      data=airquality)
 
  # Classical backfitting
  # Find optimal spans using leave-one-out cross validation
@@ -50,7 +50,7 @@ fit.full <- backf.rob(Ozone ~ Solar.R + Wind + Temp, windows=bandw,
  n <- nrow(aircomplete)
  # Fit the backfitting algorithm with the optimal spans found above
  fit.gam <- gam(Ozone ~ lo(Solar.R, span=.7) + lo(Wind, span=.7)+
-                  lo(Temp, span=.5), data=aircomplete)
+                  lo(Temp, span=.5), data=ccs)
  
  # Plot both fits (robust and classical) 
  x <- as.matrix( aircomplete[ , c('Solar.R', 'Wind', 'Temp')] )
@@ -71,7 +71,7 @@ fit.full <- backf.rob(Ozone ~ Solar.R + Wind + Temp, windows=bandw,
  }
  
  dev.off()
- 
+ par(mfrow=c(1,1)) 
  
 # Identify possible outliers
 # first compute residuals
@@ -100,28 +100,13 @@ pairs(aircomplete[os2, c('Ozone', 'Solar.R', 'Wind', 'Temp')],
  #dev.off()
 
 
-# Classical backfitting
-# Find optimal spans using leave-one-out cross validation
-library(gam)
-aircomplete <- airquality[ccs, c('Ozone', 'Solar.R', 'Wind', 'Temp')]
-a <- c(.3, .4, .5, .6, .7, .8, .9)
-hh <- expand.grid(a, a, a)
-nh <- nrow(hh)
-jbest <- 0
-cvbest <- +Inf
-n <- nrow(aircomplete)
-# Fit the backfitting algorithm with the optimal spans found above
-fit.gam <- gam(Ozone ~ lo(Solar.R, span=.7) + lo(Wind, span=.7)+
-                 lo(Temp, span=.5), data=aircomplete)
-
-
 # Plot both fits (robust and classical) 
 x <- as.matrix( aircomplete[ , c('Solar.R', 'Wind', 'Temp')] )
 y <- as.vector( aircomplete[ , 'Ozone'] )
 fits <- predict(fit.gam, type='terms')
 par(mfrow=c(2,2))
 
-png('Figure-ozone-res-h-g-todos.png', bg='transparent', width = 720, height = 420, units="px") #480, 280
+#png('Figure-ozone-res-h-g-todos.png', bg='transparent', width = 720, height = 420, units="px") #480, 280
 par(mfrow=c(1,3))
 for(j in 1:3) {
   re <- fit.full$yp - fit.full$alpha - rowSums(fit.full$g.matrix[,-j])
@@ -133,8 +118,7 @@ for(j in 1:3) {
   lines(x[oo,j], fits[oo,j], lwd=5, col='magenta', lty=2)
   # dev.off()
 }
-
-dev.off()
+#dev.off()
 
 
 # Fit gam without outliers
