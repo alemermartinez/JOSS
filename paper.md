@@ -21,9 +21,9 @@ authors:
   affiliation: 2
 bibliography: refs.bib
 affiliations:
-- name: Departamento de Ciencias Básicas, Universidad Nacional de Luján
+- name: Departamento de Ciencias Básicas, Universidad Nacional de Luján, Argentina
   index: 1
-- name: Department of Statistics, University of British Columbia
+- name: Department of Statistics, University of British Columbia, Canada
   index: 2
 ---
   
