@@ -50,7 +50,7 @@ fit.full <- backf.rob(Ozone ~ Solar.R + Wind + Temp, windows=bandw,
  n <- nrow(aircomplete)
  # Fit the backfitting algorithm with the optimal spans found above
  fit.gam <- gam(Ozone ~ lo(Solar.R, span=.7) + lo(Wind, span=.7)+
-                  lo(Temp, span=.5), data=ccs)
+                  lo(Temp, span=.5), data=aircomplete)
  
  # Plot both fits (robust and classical) 
  x <- as.matrix( aircomplete[ , c('Solar.R', 'Wind', 'Temp')] )
@@ -77,7 +77,8 @@ fit.full <- backf.rob(Ozone ~ Solar.R + Wind + Temp, windows=bandw,
 # first compute residuals
 re.ro <- residuals(fit.full)
 # use the function boxplot() to plot and identify potential outliers
- png('Figure-ozone-boxplot.png', bg='transparent')
+ #png('Figure-ozone-boxplot.png', bg='transparent')
+png('Figure-ozone-boxplot.png', bg='transparent', width = 380, height = 380)
 ou.ro <- boxplot(re.ro, col='gray80')$out
 # determine their indices
 in.ro <- (1:length(re.ro))[ re.ro %in% ou.ro ]
