@@ -77,8 +77,7 @@ fit.full <- backf.rob(Ozone ~ Solar.R + Wind + Temp, windows=bandw,
 # first compute residuals
 re.ro <- residuals(fit.full)
 # use the function boxplot() to plot and identify potential outliers
- #png('Figure-ozone-boxplot.png', bg='transparent')
-png('Figure-ozone-boxplot.png', bg='transparent', width = 380, height = 380)
+ png('Figure-ozone-boxplot.png', bg='transparent')
 ou.ro <- boxplot(re.ro, col='gray80')$out
 # determine their indices
 in.ro <- (1:length(re.ro))[ re.ro %in% ou.ro ]
