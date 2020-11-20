@@ -131,10 +131,10 @@ variables: solar radiance measured in the frequency band
 (\lq\lq Wind\rq\rq, in mph) and temperature (\lq\lq Temp\rq\rq, in degrees Fahrenheit). In our analysis we focus on the
 111 complete cases in the data set. 
 
-The following figure shows the scatter plot of the data which indicates that the 
+Figure \autoref{fig:scatterplot} shows the scatter plot of the data which indicates that the 
 relationship between ozone and other variables does not appear to be linear.
 
-![Scatter Plot](ScatterPlot.png)
+![Scatter plot of variables of the Air Quality data set.\label{fig:scatterplot}](ScatterPlot.png)
 
 We propose to fit an additive model of the form 
 \begin{equation}\label{eq:ozone-model}
@@ -193,9 +193,9 @@ R> aircomplete <- airquality[ccs, c('Ozone', 'Solar.R', 'Wind', 'Temp')]
 R> fit.gam <- gam(Ozone ~ lo(Solar.R, span=.7) + lo(Wind, span=.7) + 
                   lo(Temp, span=.5), data=aircomplete)
 ```
-The following figure contains the partial residuals plots and both sets of estimated functions: robust in blue and solid lines and non-robust in magenta and dashed lines.
+Figure \autoref{fig:ozonetodos}contains the partial residuals plots and both sets of estimated functions: robust in blue and solid lines and non-robust in magenta and dashed lines.
 
-![](Figure-ozone-todos.png)
+![Plots of partial residuals with the robust backfitting fit, the estimated curves with the classical (in magenta) and robust (in blue) procedures. \label{fig:ozonetodos}](Figure-ozone-todos.png)
 
 The main differences between the two fits
 are in the estimated effects of wind speed and temperature. In particular, the classical estimate for $\hat{g}_1(\mbox{Temp})$
@@ -244,9 +244,9 @@ R> points(rep(1, length(in.ro)), re.ro[in.ro], pch=20, cex=1.5, col='red')
 ```
 -->
 
-![](Figure-ozone-boxplot.png)
+![Boxplot of the residuals obtained using the robust fit.\label{fig:boxplot}](Figure-ozone-boxplot.png)
 
-The boxplot shows 4 observations detected as outliers highlighted in red, corresponding to observations 23, 34, 53 and 77.
+The boxplot in Figure \autoref{fig:boxplot} shows 4 observations detected as outliers highlighted in red, corresponding to observations 23, 34, 53 and 77.
 
 
 <!-- In Figure \autoref{fig:ozone-scat-h} we use red points to identify the 
@@ -289,10 +289,9 @@ width="280px">
 -->
 
 To verify that the main differences between the robust and non-robust backfitting estimators are due to the possible outliers, we repeated the classical analysis without them. 
-The following figure shows the estimated curves obtained with the classical estimator using the \lq\lq clean\rq\rq\, data together with the robust ones computed on the original data set and the partial residuals of the potential outliers highlighted in red. Note that both fits are now very close. An intuitive interpretation is that the robust fit automatically down-weighted potential outliers and produced estimates very similar to those obtained with the classical 
-backfitting algorithm applied on the rest of the data.
+Figure \autoref{fig:ozoneout} shows the estimated curves obtained with the classical estimator using the \lq\lq clean\rq\rq\, data together with the robust ones computed on the original data set and the partial residuals of the potential outliers highlighted in red. Note that both fits are now very close. An intuitive interpretation is that the robust fit automatically down-weighted potential outliers and produced estimates very similar to those obtained with the classical backfitting algorithm applied on the rest of the data.
 
-![](Figure-ozone-out-cla-rob.png)
+![Plots of estimated curves and partial residuals with the robust backfitting fit. In magenta, the estimated curves with the classical backfitting procedure without potential outliers, and in blue the estimated curves with the robust approach. Red points correspond to the potential outliers. \label{fig:ozoneout}](Figure-ozone-out-cla-rob.png)
 
 <!--
 <center> <img src="Figure-ozone-out-cla-rob-g1.png" 
