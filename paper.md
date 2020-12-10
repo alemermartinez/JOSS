@@ -30,28 +30,29 @@ affiliations:
 # Summary
 
 Although highly flexible, non-parametric regression models typically require
-large sample sizes to be fit reliably, particularly when many explanatory
-variables are present in the model. Additive models provide an alternative
-that is more flexible than linear models, not affected by the curse of
+large sample sizes to be estimated reliably, particularly when they include
+many explanatory variables. Additive models provide an alternative that is
+more flexible than linear models, not affected by the curse of
 dimensionality, and also allow the exploration of individual covariate
 effects. Standard algorithms to fit these models can be highly susceptible to
 the presence of a few atypical or outlying observations in the data.
-
-``RBF`` [@RBF] is an R package that implements a robust estimator for
-additive models based on the *backfitting* algorithm.
+The ``RBF`` [@RBF] package for R implements the robust estimator for additive
+models of @BoenteMartinezSalibian2017, which can resist the damaging effect
+of outliers in the training set.
 
 # Statement of Need
 
-The purpose of ``RBF`` is to provide a kernel-based estimation procedure for
-additive models that is resistant to the presence of potential outliers. The
-package also implements several modeling tools, including functions to
-produce diagnostic plots, obtain fitted values and compute predictions.
+The purpose of ``RBF`` is to provide a user-friendly implementation of a
+kernel-based estimation procedure for additive models that is resistant to
+the presence of potential outliers. The package also implements several
+modeling tools, including functions to produce diagnostic plots, obtain
+fitted values and compute predictions.
 
 # Implementation Goals
 
 ``RBF`` provides a user interface similar to that of the R package ``gam``
 [@gam], which implements the standard non-robust kernel-based fit for
-additive models via the backfitting algorithm.
+additive models using the backfitting algorithm.
 
 # Background
 
@@ -75,44 +76,42 @@ smoothing parameter used for obtaining the estimator.
 
 Additve models offer a non-parametric generalization of linear models
 (@HastieTibshirani1990). They are flexible, interpretable and avoid the
-*curse of dimensionality* which is due to the fact that, as
-the number of explanatory variables increases, neighbourhoods become more
-sparse, and much fewer training observations are available to estimate the
-regression function at any one point.
+*curse of dimensionality* which means that, as the number of explanatory
+variables increases, neighbourhoods rapidly become sparse, and much fewer
+training observations are available to estimate the regression function at
+any one point.
 
-Let $Y$ be the response variable and $\textbf{X} = (X_1, \ldots, X_d)^\top$ a 
+If $Y$ denots the response variable and $\textbf{X} = (X_1, \ldots, X_d)^\top$ a 
 vector of explanatory variables, then an additive regression model postulates 
 that 
 \begin{equation} \label{eq:model} 
 Y \ = \ \mu + \sum_{j=1}^d g_j(X_j) \, + \, \epsilon \, ,
 \end{equation}
-where the error $\epsilon$ is independent of $\textbf{X}$ and centered at zero.
-The objects to be estimated are the location parameter $\mu \in \mathbb{R}$ and the
-smooth functions $g_j \, : \, \mathbb{R} \to \mathbb{R}$. Note that 
-when $g_j( X_j ) = \beta_j \, X_j$ for some
-$\beta_j \in \mathbb{R}$, the above model reduces to a standard linear regression one.
+where the error $\epsilon$ is independent of $\textbf{X}$ and centered at
+zero, the location parameter $\mu \in \mathbb{R}$ and $g_j \, : \, \mathbb{R}
+\to \mathbb{R}$ are smooth functions. Note that if $g_j( X_j ) = \beta_j \,
+X_j$ for some $\beta_j \in \mathbb{R}$ then \autoref{eq:model} reduces to a
+standard linear regression model.
 <!-- The functions $g_j$ can be interpreted as the marginal effect
 of the $j$-th covariate on the expected value of the response when all
 other explanatory variables remain fixed.-->
 
-The backfitting algorithm (@FriedmanStuetzle1981) fits the additive model
-above using kernel regression estimators for the smooth components $g_j$. 
-It is based on the following observation: under \autoref{eq:model} the
-additive components satisfy $g_j(x) = E [ Y - \mu - \sum_{\ell \ne j}
-g_\ell(X_\ell) | X_j = x ]$. Each $g_j$ is iteratively computed by smoothing
-the partial residuals as functions of $X_j$.
+The backfitting algorithm (@FriedmanStuetzle1981) fits model in
+\autoref{eq:model} using kernel regression estimators for the smooth
+components $g_j$. It is based on the following observation: under
+\autoref{eq:model} the additive components satisfy $g_j(x) = E [ Y - \mu -
+\sum_{\ell \ne j} g_\ell(X_\ell) | X_j = x ]$. Each $g_j$ is iteratively
+computed by smoothing the partial residuals as functions of $X_j$.
 
 It is well known that these estimators can be seriously affected by a relatively small 
-proportion of atypical observations in the training set. 
-@BoenteMartinezSalibian2017 proposed a robust version of
-backfitting, which is implemented in the ``RBF`` package. 
-Intuitively, the idea is to use the backfitting algorithm
-with robust smoothers, such as kernel-based estimators 
+proportion of atypical observations in the training set.
+@BoenteMartinezSalibian2017 proposed a robust version of backfitting, which
+is implemented in the ``RBF`` package. Intuitively, the idea is to use the
+backfitting algorithm with robust smoothers, such as kernel-based estimators
 (@BoenteFraiman1989). 
 <!--This approach corresponds to iteratively compute estimators of the additive functions satisfying the system of equations given by $E \left[\left. \rho\left(\frac{Y - \mu - \sum_{\ell \ne j} g_\ell(X_\ell)-g_j(x)}{\sigma}\right) \right| X_j = x \right]$
 -->
-These estimators solve 
-the following optimization problem:
+These robust estimators solve:
 <!--\begin{equation} \label{rbf:min}
 \min_{\mu, g_1, \ldots, g_d} E \left[ \, \rho \left( \frac{Y - \mu -
 \sum_{j=1}^d g_j(X_j) }{\sigma} \right) \right] 
@@ -122,9 +121,9 @@ $$ \min_{\mu, g_1, \ldots, g_d} E \left[ \, \rho \left( \frac{Y - \mu -
 \sum_{j=1}^d g_j(X_j) }{\sigma} \right) \right] 
 $$
 over $\mu \in \mathbb{R}$ and functions $g_j$ with $E[g_j(X_j)] = 0$ and
-$E[g_j^2(X_j)] < \infty$, 
-where $\rho : \mathbb{R} \to \mathbb{R}$ is an even,
-non-decreasing and non-negative loss function and $\sigma$ is the residual
+$E[g_j^2(X_j)] < \infty$. The looss function 
+$\rho : \mathbb{R} \to \mathbb{R}$ is even,
+non-decreasing and non-negative, and $\sigma$ is the residual
 scale. Different choices of the loss function $\rho$ yield fits with
 varying robustness properties. 
 Typical choices for $\rho$ are Tukey's bisquare family
@@ -133,20 +132,19 @@ t^2$, this approach reduces to the standard backfitting.
 
 # Illustration
 
-The ``airquality`` data set 
-contains 153 daily air quality measurements in the New York region 
-between May and September, 1973 (@ChambersClevelandKleinerTukey1983). 
-The interest is in modeling the mean Ozone (\lq\lq
-$\mbox{O}_3$\rq\rq) concentration as a function of 3 potential explanatory
-variables: solar radiance in the frequency band
-4000-7700 (\lq\lq Solar.R\rq\rq), wind speed
-(\lq\lq Wind\rq\rq) and temperature (\lq\lq Temp\rq\rq). 
-We focus on the 111 complete entries in the data set.
+The ``airquality`` data set contains 153 daily air quality measurements in
+the New York region between May and September, 1973
+(@ChambersClevelandKleinerTukey1983). The interest is in modeling the mean
+Ozone (\lq\lq $\mbox{O}_3$\rq\rq) concentration as a function of 3 potential
+explanatory variables: solar radiance in the frequency band
+4000-7700 (\lq\lq Solar.R\rq\rq), wind speed (\lq\lq Wind\rq\rq) and
+temperature (\lq\lq Temp\rq\rq). We focus on the 111 complete entries in the
+data set.
 
-Since the plot in Figure \autoref{fig:scatterplot} suggests that the 
-relationship between ozone and the other variables is not linear,
-we propose using an additive regression model of the form 
-\begin{equation}\label{eq:ozone-model}
+Since the plot in Figure \autoref{fig:scatterplot} suggests that the
+relationship between ozone and the other variables is not linear, we propose
+using an additive regression model of the form
+\begin{equation} \label{eq:ozone-model}
 \mbox{Ozone}=\mu+g_{1}(\mbox{Solar.R})+g_{2}(\mbox{Wind})+g_{3}(\mbox{Temp}) + \varepsilon \, .
 \end{equation} 
 
@@ -156,12 +154,9 @@ we propose using an additive regression model of the form
 
 <!--Based on the results of the simulation study reported in
 @BoenteMartinezSalibian2017, w-->
-To fit the model above we use robust local 
-linear kernel estimates and Tukey's bisquare loss function. These choices can
-be specified 
-using the arguments
-``degree = 1`` and ``type='Tukey'`` 
-in the call to the function ``backf.rob``. 
+To fit the model above we use robust local linear kernel estimates and
+Tukey's bisquare loss function. These choices can be specified using the
+arguments ``degree = 1`` and ``type='Tukey'`` in the call to the function ``backf.rob``. 
 <!-- $\rho$ function we use its default value ``k.t = 4.685``, which corresponds
 to a linear regression estimator with 95\% efficiency when errors are Gaussian.
 This choice provides a good balance between robustness and efficiency. -->
@@ -171,7 +166,8 @@ The argument ``windows`` is a vector with the bandwidths
 to be used with each kernel smoother. To obtain optimal 
 values we 
 used a robust leave-one-out cross validation approach (@BoenteMartinezSalibian2017) 
-and obtained the following estimated optimal bandwidths:
+which resulted in the following 
+estimated optimal bandwidths:
 
 <!--
 To select the bandwidths of the smoothers (in the vector ``bandw`` above) we consider
@@ -205,10 +201,9 @@ between consecutive estimates $\hat{g}_j$) and \code{max.it} (maximum number of
 iterations). 
 -->
 
-To compare the robust and classical estimates we use the R package ``gam`` to
-fit the model \autoref{eq:ozone-model} using the standard backfitting
-algorithm (optimal bandwidths were estimated using leave-one-out
-cross-validation):
+To compare the robust and classical estimates we use the R package ``gam``. 
+Optimal bandwidths were estimated using leave-one-out
+cross-validation as before.
 ```
 R> library(gam)
 R> aircomplete <- airquality[ccs, c('Ozone', 'Solar.R', 'Wind', 'Temp')]
@@ -216,7 +211,7 @@ R> fit.gam <- gam(Ozone ~ lo(Solar.R, span=.7) + lo(Wind, span=.7) +
                   lo(Temp, span=.5), data=aircomplete)
 ```
 Figure \autoref{fig:ozonetodos} contains partial residuals plots and both sets of estimated functions: 
-blue solid lines for the robust fit and magenta dashed ones for the classical approach. 
+blue solid lines indicate the robust fit and magenta dashed ones the classical one.
 
 ![Plots of partial residuals with the robust backfitting fit, the estimated curves with the classical (in magenta) and robust (in blue) procedures. \label{fig:ozonetodos}](Figure-ozone-todos.png){ width=85% } 
 
@@ -246,12 +241,10 @@ corresponding estimated additive components of the model.
 ![](Figure-ozone-full.png)
 -->
 
-Residuals from a robust fit can generally be used 
-as a diagnostic tool to detect the presence of atypical
-observations in the training data. 
-Figure \autoref{fig:boxplot} displays a boxplot of these residuals.
-We note 4 possible outlying points 
-(indicated with red circles). 
+Residuals from a robust fit can generally be used to detect the presence of
+atypical observations in the training data. Figure \autoref{fig:boxplot}
+displays a boxplot of these residuals. We note 4 possible outlying points
+(indicated with red circles).
 
 <!-- In addition to displaying the boxplot, we use the function
 ``boxplot`` to also identify outlying residuals as shown in the code below.
@@ -313,7 +306,7 @@ width="280px">
 -->
 
 To investigate whether the differences between the robust and non-robust estimators 
-are due to the outliers, we repeated the classical analysis after removing them. 
+are due to the outliers, we recomputed the classical fit after removing them.
 Figure \autoref{fig:ozoneout} shows the estimated curves obtained with the classical estimator 
 using the \lq\lq clean\rq\rq\ data together with the robust ones (computed on the whole data set). 
 Outliers are highlighted in red. Note that both fits are now very close. 
