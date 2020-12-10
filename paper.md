@@ -1,5 +1,5 @@
 ---
-title: 'RBF: An R package for computing a robust backfitting estimation procedure
+title: 'RBF: An R package to compute a robust backfitting estimator
   for additive models'
 tags:
 - R
@@ -43,16 +43,16 @@ of outliers in the training set.
 # Statement of Need
 
 The purpose of ``RBF`` is to provide a user-friendly implementation of a
-kernel-based estimation procedure for additive models that is resistant to
-the presence of potential outliers. The package also implements several
-modeling tools, including functions to produce diagnostic plots, obtain
-fitted values and compute predictions.
+robust kernel-based estimation procedure for additive models that is resistant to
+the presence of potential outliers. 
 
 # Implementation Goals
 
-``RBF`` provides a user interface similar to that of the R package ``gam``
-[@gam], which implements the standard non-robust kernel-based fit for
-additive models using the backfitting algorithm.
+``RBF`` implements a user interface similar to that of the R package ``gam``
+[@gam], which computes the standard non-robust kernel-based fit for additive
+models using the backfitting algorithm. The ``RBF`` package also includes
+several modeling tools, including functions to produce diagnostic plots,
+obtain fitted values and compute predictions.
 
 # Background
 
