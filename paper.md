@@ -150,7 +150,7 @@ we propose using an additive regression model of the form
 \mbox{Ozone}=\mu+g_{1}(\mbox{Solar.R})+g_{2}(\mbox{Wind})+g_{3}(\mbox{Temp}) + \varepsilon \, .
 \end{equation} 
 
-![Scatter plot of variables of the Air Quality data set.\label{fig:scatterplot}](ScatterPlot.png){ width=50% }
+![Scatter plot of variables of the Air Quality data set.\label{fig:scatterplot}](ScatterPlot.png){ width=85% }
 <!-- <img src="Assets/icon.png" width="200">
 ![drawing](drawing.jpg){ width=50% } -->
 
@@ -320,7 +320,7 @@ Outliers are highlighted in red. Note that both fits are now very close.
 An intuitive interpretation is that the robust fit has automatically down-weighted potential outliers 
 and produced estimates very similar to the classical ones applied to the ``clean'' observations.
 
-![Plots of estimated curves and partial residuals with the robust backfitting fit. In magenta, the estimated curves with the classical backfitting procedure without potential outliers, and in blue the estimated curves with the robust approach. Red points correspond to the potential outliers. \label{fig:ozoneout}](Figure-ozone-out-cla-rob.png)
+![Plots of estimated curves and partial residuals with the robust backfitting fit. In magenta, the estimated curves with the classical backfitting procedure without potential outliers, and in blue the estimated curves with the robust approach. Red points correspond to the potential outliers. \label{fig:ozoneout}](Figure-ozone-out-cla-rob.png){ width=85% }
 
 <!--
 <center> <img src="Figure-ozone-out-cla-rob-g1.png" 
