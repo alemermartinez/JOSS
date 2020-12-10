@@ -141,16 +141,17 @@ explanatory variables: solar radiance in the frequency band
 temperature (\lq\lq Temp\rq\rq). We focus on the 111 complete entries in the
 data set.
 
-![Scatter plot of variables of the Air Quality data set.\label{fig:scatterplot}](ScatterPlot.png){ width=85% }
-<!-- <img src="Assets/icon.png" width="200">
-![drawing](drawing.jpg){ width=50% } -->
-
 Since the plot in Figure \autoref{fig:scatterplot} suggests that the
 relationship between ozone and the other variables is not linear, we propose
 using an additive regression model of the form
 \begin{equation} \label{eq:ozone-model}
 \mbox{Ozone}=\mu+g_{1}(\mbox{Solar.R})+g_{2}(\mbox{Wind})+g_{3}(\mbox{Temp}) + \varepsilon \, .
 \end{equation} 
+
+![Scatter plot of variables of the Air Quality data set. \label{fig:scatterplot}](ScatterPlot.png){ width=85% }
+
+<!-- <img src="Assets/icon.png" width="200">
+![drawing](drawing.jpg){ width=50% } -->
 
 <!--Based on the results of the simulation study reported in
 @BoenteMartinezSalibian2017, w-->
