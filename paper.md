@@ -141,7 +141,7 @@ explanatory variables: solar radiance in the frequency band
 temperature (\lq\lq Temp\rq\rq). We focus on the 111 complete entries in the
 data set.
 
-Since the plot in Figure \autoref{fig:scatterplot} suggests that the
+Since the plot in \autoref{fig:scatterplot} suggests that the
 relationship between ozone and the other variables is not linear, we propose
 using an additive regression model of the form
 \begin{equation} \label{eq:ozone-model}
@@ -211,7 +211,7 @@ R> aircomplete <- airquality[ccs, c('Ozone', 'Solar.R', 'Wind', 'Temp')]
 R> fit.gam <- gam(Ozone ~ lo(Solar.R, span=.7) + lo(Wind, span=.7) + 
                   lo(Temp, span=.5), data=aircomplete)
 ```
-Figure \autoref{fig:ozonetodos} contains partial residuals plots and both sets of estimated functions: 
+\autoref{fig:ozonetodos} contains partial residuals plots and both sets of estimated functions: 
 blue solid lines indicate the robust fit and magenta dashed ones the classical one.
 
 ![Plots of partial residuals with the robust backfitting fit, the estimated curves with the classical (in magenta) and robust (in blue) procedures. \label{fig:ozonetodos}](Figure-ozone-todos.png){ width=85% } 
@@ -243,7 +243,7 @@ corresponding estimated additive components of the model.
 -->
 
 Residuals from a robust fit can generally be used to detect the presence of
-atypical observations in the training data. Figure \autoref{fig:boxplot}
+atypical observations in the training data. \autoref{fig:boxplot}
 displays a boxplot of these residuals. We note 4 possible outlying points
 (indicated with red circles).
 
@@ -308,7 +308,7 @@ width="280px">
 
 To investigate whether the differences between the robust and non-robust estimators 
 are due to the outliers, we recomputed the classical fit after removing them.
-Figure \autoref{fig:ozoneout} shows the estimated curves obtained with the classical estimator 
+\autoref{fig:ozoneout} shows the estimated curves obtained with the classical estimator 
 using the \lq\lq clean\rq\rq\ data together with the robust ones (computed on the whole data set). 
 Outliers are highlighted in red. Note that both fits are now very close. 
 An intuitive interpretation is that the robust fit has automatically down-weighted potential outliers 
