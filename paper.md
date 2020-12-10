@@ -150,7 +150,7 @@ we propose using an additive regression model of the form
 \mbox{Ozone}=\mu+g_{1}(\mbox{Solar.R})+g_{2}(\mbox{Wind})+g_{3}(\mbox{Temp}) + \varepsilon \, .
 \end{equation} 
 
-![Scatter plot of variables of the Air Quality data set.\label{fig:scatterplot}](ScatterPlot.png){ width=33% }
+![Scatter plot of variables of the Air Quality data set.\label{fig:scatterplot}](ScatterPlot.png){ width=50% }
 <!-- <img src="Assets/icon.png" width="200">
 ![drawing](drawing.jpg){ width=50% } -->
 
@@ -218,7 +218,7 @@ R> fit.gam <- gam(Ozone ~ lo(Solar.R, span=.7) + lo(Wind, span=.7) +
 Figure \autoref{fig:ozonetodos} contains partial residuals plots and both sets of estimated functions: 
 blue solid lines for the robust fit and magenta dashed ones for the classical approach. 
 
-![Plots of partial residuals with the robust backfitting fit, the estimated curves with the classical (in magenta) and robust (in blue) procedures. \label{fig:ozonetodos}](Figure-ozone-todos.png)
+![Plots of partial residuals with the robust backfitting fit, the estimated curves with the classical (in magenta) and robust (in blue) procedures. \label{fig:ozonetodos}](Figure-ozone-todos.png){ width=85% } 
 
 The two fits differ mainly on the estimated effects of wind speed and
 temperature. The classical estimate for $g_1(\mbox{Temp})$ is consistently
@@ -270,7 +270,7 @@ R> points(rep(1, length(in.ro)), re.ro[in.ro], pch=20, cex=1.5, col='red')
 ```
 -->
 
-![Boxplot of the residuals obtained using the robust fit.\label{fig:boxplot}](Figure-ozone-boxplot.png)
+![Boxplot of the residuals obtained using the robust fit.\label{fig:boxplot}](Figure-ozone-boxplot.png){ width=50% }
 
 
 <!-- In Figure \autoref{fig:ozone-scat-h} we use red points to identify the 
