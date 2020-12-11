@@ -13,7 +13,7 @@ output:
   html_document:
     df_print: paged
 authors:
-- name: Alejandra M. Martínez
+- name: Alejandra M. Mart&iacute;nez
   orcid: 0000-0002-1893-2039
   affiliation: 1
 - name: Matias Salibian-Barrera
@@ -21,7 +21,7 @@ authors:
   affiliation: 2
 bibliography: refs.bib
 affiliations:
-- name: Departamento de Ciencias Básicas, Universidad Nacional de Luján, Argentina
+- name: Departamento de Ciencias Básicas, Universidad Nacional de Luj&aacute;n, Argentina
   index: 1
 - name: Department of Statistics, University of British Columbia, Canada
   index: 2
@@ -352,7 +352,7 @@ contains detailed scripts reproducing the data analysis above.
 This research was partially supported by: 20020170100022BA from the
 Universidad de Buenos Aires; project PICT 2018-00740 from ANPCYT; Internal
 Projects CD-CBLUJ 301/19 and CD-CBLUJ 204/19 from the Department of Basic
-Science of the Universidad Nacional de Luján (UNLu); the Researchers in
+Science of the Universidad Nacional de Luj&aacute;n (UNLu); the Researchers in
 Training Project RESREC-LUJ 224/19 (UNLu); and by the Natural Sciences and
 Engineering Research Council of Canada (Discovery Grant RGPIN-2016-04288).
 
