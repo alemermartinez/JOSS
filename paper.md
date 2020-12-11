@@ -8,10 +8,10 @@ tags:
 - Robustness
 date: "17 November 2020"
 output:
-  pdf_document: default
-  word_document: default
   html_document:
     df_print: paged
+  word_document: default
+  pdf_document: default
 authors:
 - name: Alejandra M. Mart&iacute;nez
   orcid: 0000-0002-1893-2039
