@@ -81,14 +81,14 @@ variables increases, neighbourhoods rapidly become sparse, and much fewer
 training observations are available to estimate the regression function at
 any one point.
 
-If $Y$ denots the response variable and $\textbf{X} = (X_1, \ldots, X_d)^\top$ a 
-vector of explanatory variables, then an additive regression model postulates 
-that 
+If $Y$ denots the response variable, and $\textbf{X} = (X_1, \ldots, X_d)^\top$ 
+a vector of explanatory variables, then an additive regression model
+postulates that
 \begin{equation} \label{eq:model} 
 Y \ = \ \mu + \sum_{j=1}^d g_j(X_j) \, + \, \epsilon \, ,
 \end{equation}
 where the error $\epsilon$ is independent of $\textbf{X}$ and centered at
-zero, the location parameter $\mu \in \mathbb{R}$ and $g_j \, : \, \mathbb{R}
+zero, the location parameter $\mu \in \mathbb{R}$, and $g_j \, : \, \mathbb{R}
 \to \mathbb{R}$ are smooth functions. Note that if $g_j( X_j ) = \beta_j \,
 X_j$ for some $\beta_j \in \mathbb{R}$ then \autoref{eq:model} reduces to a
 standard linear regression model.
@@ -96,18 +96,18 @@ standard linear regression model.
 of the $j$-th covariate on the expected value of the response when all
 other explanatory variables remain fixed.-->
 
-The backfitting algorithm (@FriedmanStuetzle1981) fits model in
-\autoref{eq:model} using kernel regression estimators for the smooth
+The backfitting algorithm (@FriedmanStuetzle1981) can be used to fit the
+model in \autoref{eq:model} with kernel regression estimators for the smooth
 components $g_j$. It is based on the following observation: under
 \autoref{eq:model} the additive components satisfy $g_j(x) = E [ Y - \mu -
-\sum_{\ell \ne j} g_\ell(X_\ell) | X_j = x ]$. Each $g_j$ is iteratively
+\sum_{\ell \ne j} g_\ell(X_\ell) | X_j = x ]$. Thus, each $g_j$ is iteratively
 computed by smoothing the partial residuals as functions of $X_j$.
 
 It is well known that these estimators can be seriously affected by a relatively small 
 proportion of atypical observations in the training set.
 @BoenteMartinezSalibian2017 proposed a robust version of backfitting, which
 is implemented in the ``RBF`` package. Intuitively, the idea is to use the
-backfitting algorithm with robust smoothers, such as kernel-based estimators
+backfitting algorithm with robust smoothers, such as kernel-based M-estimators
 (@BoenteFraiman1989). 
 <!--This approach corresponds to iteratively compute estimators of the additive functions satisfying the system of equations given by $E \left[\left. \rho\left(\frac{Y - \mu - \sum_{\ell \ne j} g_\ell(X_\ell)-g_j(x)}{\sigma}\right) \right| X_j = x \right]$
 -->
@@ -118,9 +118,10 @@ These robust estimators solve:
 \end{equation}
 -->
 $$ \min_{\mu, g_1, \ldots, g_d} E \left[ \, \rho \left( \frac{Y - \mu -
-\sum_{j=1}^d g_j(X_j) }{\sigma} \right) \right] 
+\sum_{j=1}^d g_j(X_j) }{\sigma} \right) \right]  \, , 
 $$
-over $\mu \in \mathbb{R}$ and functions $g_j$ with $E[g_j(X_j)] = 0$ and
+where the minimization is computed 
+over $\mu \in \mathbb{R}$, and functions $g_j$ with $E[g_j(X_j)] = 0$ and
 $E[g_j^2(X_j)] < \infty$. The loss function 
 $\rho : \mathbb{R} \to \mathbb{R}$ is even,
 non-decreasing and non-negative, and $\sigma$ is the residual
@@ -148,14 +149,14 @@ using an additive regression model of the form
 \mbox{Ozone}=\mu+g_{1}(\mbox{Solar.R})+g_{2}(\mbox{Wind})+g_{3}(\mbox{Temp}) + \varepsilon \, .
 \end{equation} 
 
-![Scatter plot of variables of the Air Quality data set. \label{fig:scatterplot}](ScatterPlot.png){ width=85% }
+![Scatter plot of the Air Quality data. The response variable is Ozone. \label{fig:scatterplot}](ScatterPlot.png){ width=85% }
 
 <!-- <img src="Assets/icon.png" width="200">
 ![drawing](drawing.jpg){ width=50% } -->
 
 <!--Based on the results of the simulation study reported in
 @BoenteMartinezSalibian2017, w-->
-To fit the model above we use robust local linear kernel estimates and
+To fit the model above we use robust local linear kernel M-estimators and
 Tukey's bisquare loss function. These choices can be specified using the
 arguments ``degree = 1`` and ``type='Tukey'`` in the call to the function ``backf.rob``. 
 <!-- $\rho$ function we use its default value ``k.t = 4.685``, which corresponds
@@ -202,7 +203,7 @@ between consecutive estimates $\hat{g}_j$) and \code{max.it} (maximum number of
 iterations). 
 -->
 
-To compare the robust and classical estimates we use the R package ``gam``. 
+To compare the robust and classical estimators we use the R package ``gam``. 
 Optimal bandwidths were estimated using leave-one-out
 cross-validation as before.
 ```
@@ -214,7 +215,7 @@ R> fit.gam <- gam(Ozone ~ lo(Solar.R, span=.7) + lo(Wind, span=.7) +
 \autoref{fig:ozonetodos} contains partial residuals plots and both sets of estimated functions: 
 blue solid lines indicate the robust fit and magenta dashed ones the classical one.
 
-![Plots of partial residuals with the robust backfitting fit, the estimated curves with the classical (in magenta) and robust (in blue) procedures. \label{fig:ozonetodos}](Figure-ozone-todos.png){ width=85% } 
+![Partial residuals and fits for the ``airquality`` data. Robust and classical fits are show with solid blue and dashed magenta lines, respectively.  \label{fig:ozonetodos}](Figure-ozone-todos.png){ width=85% } 
 
 The two fits differ mainly on the estimated effects of wind speed and
 temperature. The classical estimate for $g_1(\mbox{Temp})$ is consistently
@@ -264,7 +265,7 @@ R> points(rep(1, length(in.ro)), re.ro[in.ro], pch=20, cex=1.5, col='red')
 ```
 -->
 
-![Boxplot of the residuals obtained using the robust fit.\label{fig:boxplot}](Figure-ozone-boxplot.png){ width=50% }
+![Boxplot of the residuals obtained using the robust fit. Potential outliers are highlighed with solid red circles. \label{fig:boxplot}](Figure-ozone-boxplot.png){ width=50% }
 
 
 <!-- In Figure \autoref{fig:ozone-scat-h} we use red points to identify the 
@@ -314,7 +315,7 @@ Outliers are highlighted in red. Note that both fits are now very close.
 An intuitive interpretation is that the robust fit has automatically down-weighted potential outliers 
 and produced estimates very similar to the classical ones applied to the \lq\lq  clean\rq\rq\ observations.
 
-![Plots of estimated curves and partial residuals with the robust backfitting fit. In magenta, the estimated curves with the classical backfitting procedure without potential outliers, and in blue the estimated curves with the robust approach. Red points correspond to the potential outliers. \label{fig:ozoneout}](Figure-ozone-out-cla-rob.png){ width=85% }
+![Plots of estimated curves and partial residuals. The solid blue lines indicate the robust fit computed on the whole data set, while the classical estimators computed on the \lq\lq clean \rq\rq data are shown with dashed magenta lines. Red points indicate potential outliers. \label{fig:ozoneout}](Figure-ozone-out-cla-rob.png){ width=85% }
 
 <!--
 <center> <img src="Figure-ozone-out-cla-rob-g1.png" 
@@ -344,7 +345,8 @@ Red points correspond to the potential outliers.
 # Availability
 
 The software is available at the Comprehensive R Archive Network [CRAN](https://CRAN.R-project.org/) 
-and also at the  [GitHub repository](https://github.com/msalibian/RBF). The GitHub repository also 
+and also at the  GitHub repository
+[https://github.com/msalibian/RBF](https://github.com/msalibian/RBF). The GitHub repository also 
 contains detailed scripts reproducing the data analysis above.
 
 # Acknowledgements
