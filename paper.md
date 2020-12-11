@@ -8,10 +8,10 @@ tags:
 - Robustness
 date: "17 November 2020"
 output:
-  html_document:
-    df_print: paged
   pdf_document: default
   word_document: default
+  html_document:
+    df_print: paged
 authors:
 - name: Alejandra M. Martínez
   orcid: 0000-0002-1893-2039
@@ -121,7 +121,7 @@ $$ \min_{\mu, g_1, \ldots, g_d} E \left[ \, \rho \left( \frac{Y - \mu -
 \sum_{j=1}^d g_j(X_j) }{\sigma} \right) \right] 
 $$
 over $\mu \in \mathbb{R}$ and functions $g_j$ with $E[g_j(X_j)] = 0$ and
-$E[g_j^2(X_j)] < \infty$. The looss function 
+$E[g_j^2(X_j)] < \infty$. The loss function 
 $\rho : \mathbb{R} \to \mathbb{R}$ is even,
 non-decreasing and non-negative, and $\sigma$ is the residual
 scale. Different choices of the loss function $\rho$ yield fits with
@@ -312,7 +312,7 @@ are due to the outliers, we recomputed the classical fit after removing them.
 using the \lq\lq clean\rq\rq\ data together with the robust ones (computed on the whole data set). 
 Outliers are highlighted in red. Note that both fits are now very close. 
 An intuitive interpretation is that the robust fit has automatically down-weighted potential outliers 
-and produced estimates very similar to the classical ones applied to the ``clean'' observations.
+and produced estimates very similar to the classical ones applied to the \lq\lq  clean\rq\rq\ observations.
 
 ![Plots of estimated curves and partial residuals with the robust backfitting fit. In magenta, the estimated curves with the classical backfitting procedure without potential outliers, and in blue the estimated curves with the robust approach. Red points correspond to the potential outliers. \label{fig:ozoneout}](Figure-ozone-out-cla-rob.png){ width=85% }
 
@@ -352,7 +352,7 @@ contains detailed scripts reproducing the data analysis above.
 This research was partially supported by: 20020170100022BA from the
 Universidad de Buenos Aires; project PICT 2018-00740 from ANPCYT; Internal
 Projects CD-CBLUJ 301/19 and CD-CBLUJ 204/19 from the Department of Basic
-Science of the Universidad Nacional de Luj\'an (UNLu); the Researchers in
+Science of the Universidad Nacional de Luján (UNLu); the Researchers in
 Training Project RESREC-LUJ 224/19 (UNLu); and by the Natural Sciences and
 Engineering Research Council of Canada (Discovery Grant RGPIN-2016-04288).
 
