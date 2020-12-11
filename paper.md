@@ -81,7 +81,7 @@ variables increases, neighbourhoods rapidly become sparse, and much fewer
 training observations are available to estimate the regression function at
 any one point.
 
-If $Y$ denots the response variable, and $\textbf{X} = (X_1, \ldots, X_d)^\top$ 
+If $Y$ denotes the response variable, and $\textbf{X} = (X_1, \ldots, X_d)^\top$ 
 a vector of explanatory variables, then an additive regression model
 postulates that
 \begin{equation} \label{eq:model} 
@@ -149,7 +149,7 @@ using an additive regression model of the form
 \mbox{Ozone}=\mu+g_{1}(\mbox{Solar.R})+g_{2}(\mbox{Wind})+g_{3}(\mbox{Temp}) + \varepsilon \, .
 \end{equation} 
 
-![Scatter plot of the Air Quality data. The response variable is Ozone. \label{fig:scatterplot}](ScatterPlot.png){ width=85% }
+![Scatter plot of the ``airquality`` data. The response variable is Ozone. \label{fig:scatterplot}](ScatterPlot.png){ width=85% }
 
 <!-- <img src="Assets/icon.png" width="200">
 ![drawing](drawing.jpg){ width=50% } -->
@@ -157,19 +157,16 @@ using an additive regression model of the form
 <!--Based on the results of the simulation study reported in
 @BoenteMartinezSalibian2017, w-->
 To fit the model above we use robust local linear kernel M-estimators and
-Tukey's bisquare loss function. These choices can be specified using the
+Tukey's bisquare loss function. These choices are set using the
 arguments ``degree = 1`` and ``type='Tukey'`` in the call to the function ``backf.rob``. 
 <!-- $\rho$ function we use its default value ``k.t = 4.685``, which corresponds
 to a linear regression estimator with 95\% efficiency when errors are Gaussian.
 This choice provides a good balance between robustness and efficiency. -->
-The model is specified with the standard
-formula notation in R.  
-The argument ``windows`` is a vector with the bandwidths 
-to be used with each kernel smoother. To obtain optimal 
-values we 
-used a robust leave-one-out cross validation approach (@BoenteMartinezSalibian2017) 
-which resulted in the following 
-estimated optimal bandwidths:
+The model is specified with the standard formula notation in R. The argument
+``windows`` is a vector with the bandwidths to be used with each kernel
+smoother. To estimate optimal values we used a robust leave-one-out cross
+alidation approach (@BoenteMartinezSalibian2017) which resulted in the
+following bandwidths:
 
 <!--
 To select the bandwidths of the smoothers (in the vector ``bandw`` above) we consider
@@ -215,7 +212,7 @@ R> fit.gam <- gam(Ozone ~ lo(Solar.R, span=.7) + lo(Wind, span=.7) +
 \autoref{fig:ozonetodos} contains partial residuals plots and both sets of estimated functions: 
 blue solid lines indicate the robust fit and magenta dashed ones the classical one.
 
-![Partial residuals and fits for the ``airquality`` data. Robust and classical fits are show with solid blue and dashed magenta lines, respectively.  \label{fig:ozonetodos}](Figure-ozone-todos.png){ width=85% } 
+![Partial residuals and fits for the ``airquality`` data. Robust and classical fits are shown with solid blue and dashed magenta lines, respectively.  \label{fig:ozonetodos}](Figure-ozone-todos.png){ width=85% } 
 
 The two fits differ mainly on the estimated effects of wind speed and
 temperature. The classical estimate for $g_1(\mbox{Temp})$ is consistently
@@ -315,7 +312,7 @@ Outliers are highlighted in red. Note that both fits are now very close.
 An intuitive interpretation is that the robust fit has automatically down-weighted potential outliers 
 and produced estimates very similar to the classical ones applied to the \lq\lq  clean\rq\rq\ observations.
 
-![Plots of estimated curves and partial residuals. The solid blue lines indicate the robust fit computed on the whole data set, while the classical estimators computed on the \lq\lq clean \rq\rq data are shown with dashed magenta lines. Red points indicate potential outliers. \label{fig:ozoneout}](Figure-ozone-out-cla-rob.png){ width=85% }
+![Plots of estimated curves and partial residuals. The solid blue lines indicate the robust fit computed on the whole data set, while the classical estimators computed on the \lq\lq clean \rq\rq data are shown with dashed magenta lines. Larger red circles indicate potential outliers. \label{fig:ozoneout}](Figure-ozone-out-cla-rob.png){ width=85% }
 
 <!--
 <center> <img src="Figure-ozone-out-cla-rob-g1.png" 
